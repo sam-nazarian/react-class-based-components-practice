@@ -1,15 +1,13 @@
 import { Fragment, Component } from 'react';
 import styles from './UserFinder.module.css';
+import UsersContext from '../store/users-context';
 
 import Users from './Users';
 
-const DUMMY_USERS = [
-  { id: 'u1', name: 'Max' },
-  { id: 'u2', name: 'Manuel' },
-  { id: 'u3', name: 'Julie' },
-];
-
 class UserFinder extends Component {
+  //can only have 1 static context per class like this
+  static contextType = UsersContext;
+
   constructor() {
     super();
     this.state = {
@@ -24,7 +22,7 @@ class UserFinder extends Component {
 
   componentDidMount() {
     // Send http request...
-    this.setState({ filteredUsers: DUMMY_USERS });
+    this.setState({ filteredUsers: this.context.users });
   }
 
   //last state & prop snapshot before the component updated
@@ -32,7 +30,7 @@ class UserFinder extends Component {
     // if the searchTerm changed
     if (prevState.searchTerm !== this.state.searchTerm) {
       this.setState({
-        filteredUsers: DUMMY_USERS.filter((user) => user.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())),
+        filteredUsers: this.context.users.filter((user) => user.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())),
       });
     }
   }
