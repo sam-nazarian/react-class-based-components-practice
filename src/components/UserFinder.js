@@ -3,10 +3,11 @@ import styles from './UserFinder.module.css';
 import UsersContext from '../store/users-context';
 
 import Users from './Users';
+import ErrorBoundary from './ErrorBoundry';
 
 class UserFinder extends Component {
   //can only have 1 static context per class like this
-  static contextType = UsersContext;
+  static contextType = UsersContext; //gets context from UsersContext file
 
   constructor() {
     super();
@@ -46,7 +47,9 @@ class UserFinder extends Component {
           <input type="search" onChange={this.searchChangeHandler.bind(this)} />
         </div>
 
-        <Users users={this.state.filteredUsers} />
+        <ErrorBoundary>
+          <Users users={this.state.filteredUsers} />
+        </ErrorBoundary>
       </Fragment>
     );
   }

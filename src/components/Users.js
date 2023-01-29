@@ -12,6 +12,17 @@ class Users extends Component {
     };
   }
 
+  componentDidUpdate() {
+    // try {
+    //   someCodeWhichMightFail()
+    // } catch (err) {
+    //   // handle error
+    // }
+    if (this.props.users.length === 0) {
+      throw new Error('No users provided');
+    }
+  }
+
   toggleUsersHandler() {
     // When a traditional function is called, 'this' refers to the global object (or undefined in strict mode) rather than the component instance.
     // console.log('this Keyword: ', this);
